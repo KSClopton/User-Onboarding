@@ -12,10 +12,11 @@ const initialUsers = []
 const initialFormValues = {name: '', email: '', password: '', termsOfService: {Yes: false, No: false}}
 const initialFormErrors = {name: '', email: '', password: '', checkbox: false}
 const initialDisabled = true;
+const initialErrors = {name:'', email:'', password:'', accept:''};
 // set states
 function App() {
   
-  const [formErrors, setFormErrors] = useState('')
+  const [formErrors, setFormErrors] = useState(initialErrors)
   const [formValues, setFormValues] = useState(initialFormValues)
   const [users, setUsers] = useState([])
   const [disabled, setDisabled] = useState(initialDisabled)

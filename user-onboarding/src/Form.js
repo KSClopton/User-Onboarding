@@ -45,7 +45,7 @@ function Form(props) {
                     </div>
                 </label>
                 </LabelStyle>
-                <button disabled={disabled} onClick={onSubmit}>Submit</button>
+                <button className="submit" disabled={errors == {name: '', email: '', password:'', accept:''} ? false : true} onClick={onSubmit}>Submit</button>
             </div>
         </form>
         </BorderDiv>
