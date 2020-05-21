@@ -8,7 +8,7 @@ import OnboardUsers from './OnboardUsers'
 
 // initial states
 const initialUsers = []
-const initialFormValues = {name: '', email: '', role: '', civil: '', termsOfService: {Yes: false, No: false}}
+const initialFormValues = {name: '', email: '', password: '', termsOfService: {Yes: false, No: false}}
 const initialFormErrors = {name: '', email: '', password: '', checkbox: false}
 const initialDisabled = true;
 // set states
@@ -16,7 +16,8 @@ function App() {
   
   const [formErrors, setFormErrors] = useState('')
   const [formValues, setFormValues] = useState(initialFormValues)
-  const [users, setUsers] = useState(initialUsers)
+  const [users, setUsers] = useState([])
+  const [disabled, setDisabled] = useState(initialDisabled)
   
   
   // event handlers
@@ -24,6 +25,12 @@ function App() {
     const name = event.target.name
     const value = event.target.value
     
+
+    if (event.target.checkbox === false)
+    setDisabled(true)
+    else{
+      setDisabled(false)
+    }
   yup
     .reach(formSchema, name)
     .validate(value)
@@ -39,6 +46,7 @@ function App() {
           [name]: err.errors[0]
         })
       })
+
     setFormValues({
     ...formValues, [name]: value,
   })
@@ -47,11 +55,21 @@ function App() {
 //   const { name } = evt.target
 //   const { checked } = evt.target
 // }
-
+  const getUsers = () => {
+    axios.get(`https://reqres.in/api/users`)
+    .then(res => {
+      setUsers(res.data.data)
+      
+    })
+    .catch(err => {
+      
+    })
+  }
   const postNewUser = newUser => {
     axios.post(`https://reqres.in/api/users`, newUser)
     .then(res => {
       setUsers([res.data, ...users])
+      
     })
     .catch(err => {
       debugger
@@ -64,17 +82,31 @@ function App() {
       name: formValues.name.trim(),
       email: formValues.email.trim(),
       // password: formValues.password.trim(),
-      termsOfService: formValues.termsOfService
+      // termsOfService: formValues.termsOfService
     }
+    
     postNewUser(newUser)
    
   }
+  useEffect(()=> {
+    getUsers()
+  }, [])
   
-
+  // useEffect(() => {
+  //   formSchema.isValid(formValues)
+  //   .then(valid => {
+  //     setDisabled(!valid)
+  //   })
+  // }, [formValues])
+ 
   return (
+    
     <div className="App">
-      <Form errors={formErrors} values={formValues} onInputChange={onInputChange} onSubmit={onSubmit}/>
-      <OnboardUsers user={users}/>
+      
+      <Form errors={formErrors} values={users} onInputChange={onInputChange} onSubmit={onSubmit} disabled={disabled}/>
+      {users === [] || users===undefined ? 'loading...' : users.map(user => {{console.log(users)}
+        return  <OnboardUsers key={user.email} details={user}/>
+      })}
     </div>
   );
 }

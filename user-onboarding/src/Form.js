@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components'
 
 function Form(props) {
-    const {values, onInputChange, onSubmit, errors, onCheckboxChange} = props
+    const {values, onInputChange, onSubmit, errors, disabled, onCheckboxChange} = props
     return (
         <StyleContainer>
             <BorderDiv>
@@ -13,12 +13,12 @@ function Form(props) {
             <form className='form container' onSubmit={onSubmit}>
             <div className='form-group submit'>
                 <h2>OnBoard Form</h2>
-                {/* <div>
+                <div>
                     <div>{errors.name}</div>
                     <div>{errors.email}</div>
                     <div>{errors.password}</div>
                     <div>{errors.termsofservice}</div>
-                </div> */}
+                </div>
               
             </div>
             <div className='form-group inputs'>
@@ -41,11 +41,11 @@ function Form(props) {
                 <LabelStyle>
                 <label>Yes
                     <div>
-                        <input type='checkbox' name='yes' checked={values.termsofservice} onChange={onInputChange}/>
+                        <input type='checkbox' name='accept' checked={values.termsofservice} onChange={onInputChange}/>
                     </div>
                 </label>
                 </LabelStyle>
-                <button onClick={onSubmit}>Submit</button>
+                <button disabled={disabled} onClick={onSubmit}>Submit</button>
             </div>
         </form>
         </BorderDiv>
