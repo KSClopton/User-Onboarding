@@ -4,7 +4,8 @@ import Form from './Form';
 import * as yup from 'yup';
 import formSchema from './formSchema';
 import axios from 'axios';
-import OnboardUsers from './OnboardUsers'
+import OnboardUsers from './OnboardUsers';
+import styled from 'styled-components';
 
 // initial states
 const initialUsers = []
@@ -101,14 +102,44 @@ function App() {
  
   return (
     
-    <div className="App">
-      
+    <BodyContainer>
+      <Heading>
+        <h2>LoopedIn</h2>
+        <JoinButtons>
+          <button>Sign In</button>
+          <button>Loop up</button>
+        </JoinButtons>
+      </Heading>
       <Form errors={formErrors} values={users} onInputChange={onInputChange} onSubmit={onSubmit} disabled={disabled}/>
       {users === [] || users===undefined ? 'loading...' : users.map(user => {{console.log(users)}
         return  <OnboardUsers key={user.email} details={user}/>
       })}
-    </div>
+    </BodyContainer>
   );
 }
 
+const BodyContainer = styled.div `
+ 
+`
+const Heading = styled.div`
+   background-color: #B0E0E6;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+    h2{
+      padding-left: 5%;
+    }
+
+ 
+`
+const JoinButtons = styled.div`
+ 
+  padding-right: 5%;
+  width: 20%;
+  display: flex;
+  justify-content: space-between;
+ 
+`
 export default App;

@@ -54,10 +54,8 @@ function Form(props) {
 }
 
 const StyleContainer = styled.div`
-    background: slategrey;
-    
-    border: solid 2px slategrey;
-        
+    background: white;
+            
 `
 const BorderDiv = styled.div`
     margin: 10% 20% 10% 20%;
